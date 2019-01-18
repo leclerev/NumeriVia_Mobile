@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
+import { RestProvider } from '../../providers/rest/rest';
+
 import { Item } from '../../models/item';
 import { Items } from '../../providers';
 
@@ -12,8 +14,9 @@ import { Items } from '../../providers';
 export class ListMasterPage {
   currentItems: Item[];
 
-  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController, public restProvider: RestProvider) {
     this.currentItems = this.items.query();
+    this.goods = this.getGoods();
   }
 
   /**
@@ -32,7 +35,7 @@ export class ListMasterPage {
       if (item) {
         this.items.add(item);
       }
-    })
+    });
     addModal.present();
   }
 
@@ -50,5 +53,14 @@ export class ListMasterPage {
     this.navCtrl.push('ItemDetailPage', {
       item: item
     });
+  }
+
+  goods: any;
+
+  getGoods() {
+      this.restProvider.getGoods()
+          .then(data => {
+              this.goods = data;
+          });
   }
 }

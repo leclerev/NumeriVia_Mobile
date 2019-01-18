@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { Item } from '../../models/item';
-import { Api } from '../api/api';
+
+import { Api } from '..';
 
 @Injectable()
 export class Items {
@@ -9,7 +10,7 @@ export class Items {
   constructor(public api: Api) { }
 
   query(params?: any) {
-    return this.api.get('/items', params);
+    return this.api.get('/getGood', params);
   }
 
   add(item: Item) {
